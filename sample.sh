@@ -10,7 +10,7 @@ psql -d dvdrental -c 'select count(*) from film;'
 
 psql -d dvdrental -c 'CREATE EXTENSION plpgsql_check;'
 
-psql -d dvdrental << SQL
+psql -d dvdrental -c "$(cat <<'EOF'
 CREATE OR REPLACE FUNCTION find_usable_indexes()
 RETURNS VOID AS
 $$
@@ -71,7 +71,8 @@ BEGIN
         execute 'select hypopg_reset()';
 END;
 $$ LANGUAGE plpgsql;
-SQL
+EOF
+)"
 
 psql -d dvdrental -c "select * from plpgsql_check_function_tb('find_usable_indexes');"
 
