@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plpgsql_check_result
-          path: ./plpgsql_check_result.txt
+          path: /tmp/plpgsql_check_result.txt

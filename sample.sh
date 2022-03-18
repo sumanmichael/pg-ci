@@ -8,4 +8,4 @@ psql -d dvdrental -f ./create_func.sql
 
 psql -d dvdrental -c 'CREATE EXTENSION plpgsql_check;'
 
-psql -d dvdrental -c "select * from plpgsql_check_function_tb('find_usable_indexes');" -o ./plpgsql_check_result.txt
+psql -d dvdrental -c "select * from plpgsql_check_function_tb('find_usable_indexes');" -o /tmp/plpgsql_check_result.txt
