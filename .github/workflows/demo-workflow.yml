@@ -14,6 +14,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       
+      - name: Install PL/pgSQL Check Extension
+        run: |
+          chmod +x "./install_plpgsql_check.sh"
+          "./install_plpgsql_check.sh"
+        shell: bash
+        
       - name: execute script
         run: |
           chmod +x "./sample.sh"
