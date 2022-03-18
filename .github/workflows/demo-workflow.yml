@@ -19,9 +19,15 @@ jobs:
           chmod +x "./install_plpgsql_check.sh"
           "./install_plpgsql_check.sh"
         shell: bash
-        
+
       - name: execute script
         run: |
           chmod +x "./sample.sh"
           sudo -u postgres "./sample.sh"
         shell: bash
+      
+      - name: export PL/pgSQL Check report
+        uses: actions/upload-artifact@v3
+        with:
+          name: plpgsql_check_result
+          path: ./plpgsql_check_result.txt
