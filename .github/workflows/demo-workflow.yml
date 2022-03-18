@@ -13,13 +13,6 @@ jobs:
         
       - name: Check out repository code
         uses: actions/checkout@v2
-
-      - name: Check PG PS
-        run: ps -ef |grep postgres
-
-      - name: Check pg_restore location
-        run: sudo -u postgres which pg_restore
-
       
       - name: execute script
         run: |
