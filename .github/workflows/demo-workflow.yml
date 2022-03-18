@@ -5,8 +5,6 @@ jobs:
   postgres-job:
     # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
-    # Docker Hub image that `postgres-job` executes in
-    # container: node:latest
 
     # service containers to run with `postgres-job`
     services:
@@ -37,7 +35,7 @@ jobs:
 
       # queries database with postgres client
       - name: Query database
-        run: psql -h postgres -d postgres -U postgres -c 'SELECT version();'
+        run: psql -h localhost -d postgres -U postgres -c 'SELECT version();'
         env:
           # postgress password is required; alternatively, you can run:
           # `PGPASSWORD=postgres psql ...`
