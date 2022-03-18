@@ -1,0 +1,1 @@
+psql -h localhost -d postgres -U postgres -c 'SELECT version();'

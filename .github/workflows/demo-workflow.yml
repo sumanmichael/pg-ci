@@ -11,7 +11,7 @@ jobs:
       # label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:latest
+        image: postgres:13
         # service environment variables
         # `POSTGRES_HOST` is `postgres`
         env:
@@ -28,15 +28,18 @@ jobs:
           --health-retries 5
 
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
       - name: Install PostgreSQL client
         run: |
           sudo apt-get update
           sudo apt-get install --yes postgresql-client
 
-      # queries database with postgres client
-      - name: Query database
-        run: psql -h localhost -d postgres -U postgres -c 'SELECT version();'
+      - name: execute script
+        run: |
+          chmod +x "./sample.sh"
+          "./sample.sh"
+        shell: bash
         env:
-          # postgress password is required; alternatively, you can run:
-          # `PGPASSWORD=postgres psql ...`
           PGPASSWORD: postgres
