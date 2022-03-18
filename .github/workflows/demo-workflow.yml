@@ -1,9 +1,7 @@
 name: PostgreSQL service example
 on: push
 jobs:
-  # label of the container job
   postgres-job:
-    # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
 
 
@@ -15,10 +13,14 @@ jobs:
         
       - name: Check out repository code
         uses: actions/checkout@v2
-      
-      - name: Run psql from cli
-        run: sudo -u postgres psql -c 'SELECT version();'
 
+      - name: Check PG PS
+        run: ps -ef |grep postgres
+        
+      - name: Check pg_restore location
+        run: sudo -u postgres -c "which pg_restore"
+
+      
       - name: execute script
         run: |
           chmod +x "./sample.sh"
