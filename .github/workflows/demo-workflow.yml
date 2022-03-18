@@ -15,11 +15,6 @@ jobs:
         
       - name: Check out repository code
         uses: actions/checkout@v2
-
-      - name: Install PostgreSQL client
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes postgresql-client
       
       - name: Run psql from cli
         run: sudo -u postgres psql -c 'SELECT version();'
