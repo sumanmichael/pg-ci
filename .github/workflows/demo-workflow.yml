@@ -13,21 +13,35 @@ jobs:
         
       - name: Check out repository code
         uses: actions/checkout@v2
-      
-      - name: Install PL/pgSQL Check Extension
-        run: |
-          chmod +x "./install_plpgsql_check.sh"
-          "./install_plpgsql_check.sh"
-        shell: bash
 
-      - name: execute script
-        run: |
-          chmod +x "./sample.sh"
-          sudo -u postgres "./sample.sh"
-        shell: bash
-      
-      - name: export PL/pgSQL Check report
-        uses: actions/upload-artifact@v3
+      - name: demo GH Checks
+        uses: LouisBrunner/checks-action@v1.1.1
         with:
-          name: plpgsql_check_result
-          path: /tmp/plpgsql_check_result.txt
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Test Based On Job
+          conclusion: ${{ job.status }}
+
+      - name: demo GH Checks 2
+        uses: LouisBrunner/checks-action@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Test Based On Job
+          conclusion: failure
+      
+      # - name: Install PL/pgSQL Check Extension
+      #   run: |
+      #     chmod +x "./install_plpgsql_check.sh"
+      #     "./install_plpgsql_check.sh"
+      #   shell: bash
+
+      # - name: execute script
+      #   run: |
+      #     chmod +x "./sample.sh"
+      #     sudo -u postgres "./sample.sh"
+      #   shell: bash
+      
+      # - name: export PL/pgSQL Check report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: plpgsql_check_result
+      #     path: /tmp/plpgsql_check_result.txt
