@@ -41,5 +41,5 @@ jobs:
           name: PL/pgSQL Check
           conclusion: ${{ job.status }}
           output: |
-            {"summary":${{steps.execute.outputs.plpgsql_check_summary}}}
+            {"summary":"${{steps.execute.outputs.plpgsql_check_summary}}"}
           output_text_description_file: /tmp/all_fun_plpgsql_check.md
