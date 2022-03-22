@@ -9,7 +9,7 @@ SELECT cf.* FROM pg_catalog.pg_namespace n
    JOIN pg_catalog.pg_proc p ON pronamespace = n.oid
    JOIN pg_catalog.pg_language l ON p.prolang = l.oid,
    LATERAL plpgsql_check_function_tb(p.oid) cf
-  WHERE l.lanname = 'plpgsql' AND p.prorettype <> 2279;
+  WHERE l.lanname = 'plpgsql' AND p.prorettype <> 2279
 EOF
 )
 
