@@ -29,6 +29,6 @@ EOF
 echo "#PL/PGSQL REPORT" > '/tmp/all_fun_plpgsql_check.md'
 
 echo "::set-output name=plpgsql_check_summary::\"$(echo $info_plpgsql_check_query | psql -d dvdrental -t)\""
-psql -d dvdrental -c "COPY ($all_fun_plpgsql_check_query) TO '/tmp/all_fun_plpgsql_check.csv' DELIMITER '|' CSV HEADER;"
+psql -d dvdrental -c "COPY ($all_fun_plpgsql_check_query) TO '/tmp/all_fun_plpgsql_check.csv' DELIMITER ',' CSV HEADER;"
 
 csv2md < /tmp/all_fun_plpgsql_check.csv > /tmp/all_fun_plpgsql_check.md

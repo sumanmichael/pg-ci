@@ -33,6 +33,7 @@ jobs:
 
       - name: export PL/pgSQL Check report
         uses: actions/upload-artifact@v3
+        if: ${{ always() }}
         with:
           name: plpgsql_check_result
           path: /tmp/all_fun_plpgsql_check.csv
