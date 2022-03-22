@@ -22,7 +22,7 @@ jobs:
 
       - name: Install csv2md
         run: |
-          npm install -g csv2md
+          pip install csv2md
 
       - name: Execute script
         id: execute
