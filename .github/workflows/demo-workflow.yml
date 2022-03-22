@@ -1,9 +1,9 @@
 name: PostgreSQL service example
 on: push
 jobs:
-  postgres-job:
+  plpgsql-check-job:
+    name: plpgsql-check-job
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Start PostgreSQL on Ubuntu
@@ -14,36 +14,32 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: demo GH Checks
+      - name: Install PL/pgSQL Check Extension
+        run: |
+          chmod +x "./install_plpgsql_check.sh"
+          "./install_plpgsql_check.sh"
+        shell: bash
+
+      - name: Execute script
+        id: execute
+        run: |
+          chmod +x "./sample.sh"
+          sudo -u postgres "./sample.sh"
+        shell: bash
+
+      - name: export PL/pgSQL Check report
+        uses: actions/upload-artifact@v3
+        with:
+          name: plpgsql_check_result
+          path: /tmp/all_fun_plpgsql_check.md
+
+      - name: PL/pgSQL Check
         uses: LouisBrunner/checks-action@v1.1.1
+        if: ${{ always() }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: Test Based On Job
+          name: PL/pgSQL Check
           conclusion: ${{ job.status }}
-
-      - name: demo GH Checks 2
-        uses: LouisBrunner/checks-action@v1.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Test Based On Job2
-          conclusion: failure
-      
-      # never-mind comment
-
-      # - name: Install PL/pgSQL Check Extension
-      #   run: |
-      #     chmod +x "./install_plpgsql_check.sh"
-      #     "./install_plpgsql_check.sh"
-      #   shell: bash
-
-      # - name: execute script
-      #   run: |
-      #     chmod +x "./sample.sh"
-      #     sudo -u postgres "./sample.sh"
-      #   shell: bash
-      
-      # - name: export PL/pgSQL Check report
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: plpgsql_check_result
-      #     path: /tmp/plpgsql_check_result.txt
+          output: |
+            {"summary":${{steps.execute.outputs.plpgsql_check_summary}}}
+          output_text_description_file: /tmp/all_fun_plpgsql_check.md
