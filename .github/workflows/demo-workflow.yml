@@ -20,6 +20,10 @@ jobs:
           "./install_plpgsql_check.sh"
         shell: bash
 
+      - name: Install csv2md
+        run: |
+          npm install -g csv2md
+
       - name: Execute script
         id: execute
         run: |
@@ -31,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plpgsql_check_result
-          path: /tmp/all_fun_plpgsql_check.md
+          path: /tmp/all_fun_plpgsql_check.csv
 
       - name: PL/pgSQL Check
         uses: LouisBrunner/checks-action@v1.2.0
