@@ -16,7 +16,9 @@ EOF
 info_plpgsql_check_query=$(cat <<-EOF
 select string_agg(info,', ') info from (select count(*)||' '|| level info from 
 (
-SELECT cf.* FROM pg_catalog.pg_namespace n
+SELECT cf.functionid, cf.lineno, cf.statement, cf.sqlstate, 
+    cf.message, cf.detail, cf.hint, cf.level, cf.position 
+    FROM pg_catalog.pg_namespace n
    JOIN pg_catalog.pg_proc p ON pronamespace = n.oid
    JOIN pg_catalog.pg_language l ON p.prolang = l.oid,
    LATERAL plpgsql_check_function_tb(p.oid) cf
