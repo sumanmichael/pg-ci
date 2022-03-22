@@ -34,7 +34,7 @@ jobs:
           path: /tmp/all_fun_plpgsql_check.md
 
       - name: PL/pgSQL Check
-        uses: LouisBrunner/checks-action@v1.1.1
+        uses: LouisBrunner/checks-action@v1.2.0
         if: ${{ always() }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
