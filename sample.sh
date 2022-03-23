@@ -40,7 +40,7 @@ else
   plpgsql_check_status="failure"
 fi
 
-echo "::set-output name=plpgsql_check_status::\"$plpgsql_check_status\""
+echo "::set-output name=plpgsql_check_status::$plpgsql_check_status"
 
 
 echo "::set-output name=plpgsql_check_summary::\"$(echo $info_plpgsql_check_query | psql -d dvdrental -t)\""
