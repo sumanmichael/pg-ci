@@ -33,7 +33,7 @@ EOF
 
 # echo "#PL/PGSQL REPORT" > '/tmp/all_fun_plpgsql_check.md'
 error_count=$(echo $get_error_count_plpgsql_check_query | psql -d dvdrental -t) 
-if [[ $error_count -eq 0 ]]
+if [ $error_count -eq 0 ]
 then
   plpgsql_check_status="success"
 else
