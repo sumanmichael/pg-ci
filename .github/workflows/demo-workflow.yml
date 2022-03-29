@@ -16,6 +16,7 @@ jobs:
 
       - name: pgTap installation
         run: |
+          chmod +x "./install_pgtap.sh"
           sudo -u postgres "./install_pgtap.sh"
           echo "###########################"
           psql -U postgres -c 'CREATE EXTENSION pgtap;'
