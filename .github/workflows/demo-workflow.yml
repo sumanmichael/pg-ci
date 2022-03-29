@@ -1,47 +1,58 @@
-name: PostgreSQL service example
+name: PostgreSQL CI
 on: push
 jobs:
-  postgres-job:
+  plpgsql-check-job:
+    name: plpgsql-check-job
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Start PostgreSQL on Ubuntu
         run: |
           sudo systemctl start postgresql.service
           pg_isready
+          chmod +x "./*.sh"
         
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: demo GH Checks
-        uses: LouisBrunner/checks-action@v1.1.1
+      - name: Install PL/pgSQL Check Extension
+        run: "./install_plpgsql_check.sh"
+        shell: bash
+
+      - name: Install csv2md
+        run: npm install -g csv2md
+
+      - name: DB Init script
+        run: sudo -u postgres "./db_init.sh"
+        shell: bash
+
+      - name: Import Schema script
+        run: sudo -u postgres "./import_schema.sh"
+        shell: bash
+
+      - name: Import Data script
+        run: sudo -u postgres "./import_data.sh"
+        shell: bash
+     
+      - name: PL/pgSQL Check and Generate Report
+        id: execute
+        run: sudo -u postgres "./check_and_generate_report.sh"
+        shell: bash
+
+      - name: export PL/pgSQL Check report
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: plpgsql_check_result
+          path: /tmp/all_fun_plpgsql_check.csv
+
+      - name: PL/pgSQL Check
+        uses: LouisBrunner/checks-action@v1.2.0
+        if: ${{ always() }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: Test Based On Job
-          conclusion: ${{ job.status }}
-
-      - name: demo GH Checks 2
-        uses: LouisBrunner/checks-action@v1.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Test Based On Job2
-          conclusion: failure
-      
-      # - name: Install PL/pgSQL Check Extension
-      #   run: |
-      #     chmod +x "./install_plpgsql_check.sh"
-      #     "./install_plpgsql_check.sh"
-      #   shell: bash
-
-      # - name: execute script
-      #   run: |
-      #     chmod +x "./sample.sh"
-      #     sudo -u postgres "./sample.sh"
-      #   shell: bash
-      
-      # - name: export PL/pgSQL Check report
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: plpgsql_check_result
-      #     path: /tmp/plpgsql_check_result.txt
+          name: PL/pgSQL Check
+          conclusion: ${{ steps.execute.outputs.plpgsql_check_status }}
+          output: |
+            {"summary":${{ steps.execute.outputs.plpgsql_check_summary }}}
+          output_text_description_file: /tmp/all_fun_plpgsql_check.md
