@@ -13,10 +13,12 @@ jobs:
         
       - name: Check out repository code
         uses: actions/checkout@v2
-        run: "chmod +x ./*.sh"
+        
+      - name: chmod to sh files
+        run: chmod +x ./*.sh
 
       - name: Install PL/pgSQL Check Extension
-        run: "./install_plpgsql_check.sh"
+        run: ./install_plpgsql_check.sh
         shell: bash
 
       - name: Install csv2md
