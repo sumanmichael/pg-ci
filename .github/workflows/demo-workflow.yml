@@ -10,10 +10,10 @@ jobs:
         run: |
           sudo systemctl start postgresql.service
           pg_isready
-          chmod +x "./*.sh"
         
       - name: Check out repository code
         uses: actions/checkout@v2
+        run: "chmod +x ./*.sh"
 
       - name: Install PL/pgSQL Check Extension
         run: "./install_plpgsql_check.sh"
