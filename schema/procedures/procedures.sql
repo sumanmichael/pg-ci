@@ -1,6 +1,7 @@
 CREATE OR REPLACE PROCEDURE testproc() AS $body$
 DECLARE
     a numeric;
+    b numeric;
 BEGIN
     select count(*) into a from test;
 END;
