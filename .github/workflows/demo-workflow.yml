@@ -18,5 +18,6 @@ jobs:
         run: |
           git clone https://github.com/theory/pgtap
           cd pgtap
-          make && make install && make installcheck
+          make && make install && make installcheck PGUSER=postgres
+          echo "###########################"
           psql -U postgres -c 'CREATE EXTENSION pgtap;'
