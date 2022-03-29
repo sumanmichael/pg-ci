@@ -1,3 +1,3 @@
-git clone https://github.com/theory/pgtap
+sudo git clone https://github.com/theory/pgtap
 cd pgtap
-make && make install && make installcheck
+sudo make && sudo make install && sudo make installcheck
