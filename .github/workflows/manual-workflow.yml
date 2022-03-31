@@ -8,5 +8,6 @@ jobs:
         uses: dacbd/create-issue-action@main
         with:
           token: ${{ github.token }}
+          repo: mops-db-row-count
           title: Sample Test Issue
           body: Test Body of Issue
