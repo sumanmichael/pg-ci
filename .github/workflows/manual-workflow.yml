@@ -8,7 +8,7 @@ jobs:
       - name: Create Issue in Remote Repo
         uses: dacbd/create-issue-action@main
         with:
-          token: ${{ secrets.AKHIL_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           owner: Akil1470
           repo: test
           title: Sample Test Issue
